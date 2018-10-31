@@ -846,7 +846,8 @@ void Select(): {ClauseSelect select = query.getSelect(); SelectItem item=null; T
 	(<COMMA> item=SelectItem() {select.add(item);})*
 	{
 		TextPosition lastItemPos = query.getSelect().get(query.getSelect().size()-1).getPosition();
-		select.setPosition(new TextPosition(start.beginLine, start.beginColumn, lastItemPos.endLine, lastItemPos.endColumn));	}
+		select.setPosition(new TextPosition(start.beginLine, start.beginColumn, lastItemPos.endLine, lastItemPos.endColumn));
+	}
 }
 
 SelectItem SelectItem(): {IdentifierItems identifiers = new IdentifierItems(true); IdentifierItem id = null, label = null; ADQLOperand op = null; SelectItem item; Token starToken;} {
@@ -890,7 +891,8 @@ SelectItem SelectItem(): {IdentifierItems identifiers = new IdentifierItems(true
 			if (label != null){
 				item.setCaseSensitive(label.caseSensitivity);
 				item.setPosition(new TextPosition(op.getPosition(), label.position));
-			}else				item.setPosition(new TextPosition(op.getPosition()));
+			}else
+				item.setPosition(new TextPosition(op.getPosition()));
 			return item;
 		}catch(Exception ex){
 			throw generateParseException(ex);
@@ -1310,7 +1312,8 @@ ADQLOperand StringExpression(): {ADQLOperand leftOp; ADQLOperand rightOp = null;
 	)*
 	{
 		if (leftOp instanceof Concatenation){
-			Concatenation concat = (Concatenation)leftOp;			concat.setPosition(new TextPosition(concat.get(0).getPosition(), concat.get(concat.size()-1).getPosition()));
+			Concatenation concat = (Concatenation)leftOp;
+			concat.setPosition(new TextPosition(concat.get(0).getPosition(), concat.get(concat.size()-1).getPosition()));
 		}
 	  return leftOp;
 	}
@@ -1326,7 +1329,8 @@ ADQLOperand StringFactor(): {ADQLOperand op;} {
 GeometryValue<GeometryFunction> GeometryExpression(): {ADQLColumn col = null; GeometryFunction gf = null;} {
 	(col=Column() | gf=GeometryValueFunction())
 	{
-		if (col != null){		  	col.setExpectedType('G');
+		if (col != null){
+		  	col.setExpectedType('G');
 			return new GeometryValue<GeometryFunction>(col);
 		}else
 			return new GeometryValue<GeometryFunction>(gf);
@@ -1342,7 +1346,8 @@ ClauseConstraints ConditionsList(ClauseConstraints clause): {ADQLConstraint cons
 		constraint=Constraint()
 		{
 			if (notOp){
-			  	TextPosition oldPos = constraint.getPosition();				constraint = queryFactory.createNot(constraint);
+			  	TextPosition oldPos = constraint.getPosition();
+				constraint = queryFactory.createNot(constraint);
 				((NotConstraint)constraint).setPosition(new TextPosition(op.beginLine, op.beginColumn, oldPos.endLine, oldPos.endColumn));
 			}
 			notOp = false;
@@ -1374,7 +1379,8 @@ ClauseConstraints ConditionsList(ClauseConstraints clause): {ADQLConstraint cons
 		throw generateParseException(ex);
 	}
 	{
-	  	if (!clause.isEmpty()){	  		TextPosition start = clause.get(0).getPosition();
+	  	if (!clause.isEmpty()){
+	  		TextPosition start = clause.get(0).getPosition();
 	  		TextPosition end = clause.get(clause.size()-1).getPosition();
 			clause.setPosition(new TextPosition(start, end));
 		}
@@ -1551,7 +1557,8 @@ GeometryFunction GeometryFunction(): {Token fct=null, end; GeometryValue<Geometr
 				{
 					if (p1 != null)
 						gvp1 = new GeometryValue<PointFunction>(p1);
-					else{						col1.setExpectedType('G');
+					else{
+						col1.setExpectedType('G');
 						gvp1 = new GeometryValue<PointFunction>(col1);
 					}
 				}
@@ -1560,7 +1567,8 @@ GeometryFunction GeometryFunction(): {Token fct=null, end; GeometryValue<Geometr
 				{
 					if (p2 != null)
 						gvp2 = new GeometryValue<PointFunction>(p2);
-					else{						col2.setExpectedType('G');
+					else{
+						col2.setExpectedType('G');
 						gvp2 = new GeometryValue<PointFunction>(col2);
 					}
 				} 
