@@ -44,6 +44,10 @@
 		<path refid="adql.classpath" />
 		<pathelement path="${JUNIT-API}" />
 		<pathelement location="bin" />
+		<!-- The ADQL tests depend on some of the TAP classes -->
+		<fileset dir="${jarDest}">
+			<include name="tap*.jar"/>
+		</fileset>
 	</path>
 	
 	<!-- START -->
