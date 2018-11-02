@@ -31,6 +31,26 @@ public class TestADQLParser {
 	public void tearDown() throws Exception{}
 
 	@Test
+	public void testArithmeticExpression(){
+		ADQLParser parser = new ADQLParser();
+		try{
+			parser.parseQuery("SELECT a + b FROM cat;");
+			parser.parseQuery("SELECT a - b FROM cat;");
+			parser.parseQuery("SELECT a * b FROM cat;");
+			parser.parseQuery("SELECT a / b FROM cat;");
+			parser.parseQuery("SELECT a % b FROM cat;");
+			parser.parseQuery("SELECT a, b FROM cat WHERE a + b > 0;");
+			parser.parseQuery("SELECT a, b FROM cat WHERE a - b > 0;");
+			parser.parseQuery("SELECT a, b FROM cat WHERE a * b > 0;");
+			parser.parseQuery("SELECT a, b FROM cat WHERE a / b > 0;");
+			parser.parseQuery("SELECT a, b FROM cat WHERE a % b > 0;");
+		}catch(Exception e){
+			e.printStackTrace(System.err);
+			fail("These ADQL queries are strictly correct! No error should have occured. (see stdout for more details)");
+		}
+	}
+
+	@Test
 	public void testColumnReference(){
 		ADQLParser parser = new ADQLParser();
 		try{

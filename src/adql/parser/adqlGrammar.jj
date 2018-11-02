@@ -597,6 +597,7 @@ TOKEN : {
 |	< MINUS: "-" >
 |	< ASTERISK: "*" >
 |	< DIVIDE: "/" >
+|	< MODULO: "%" >
 }
 
 /* ******************** */
@@ -1208,7 +1209,7 @@ ADQLOperand StringValueExpressionPrimary(): {StringConstant expr; ADQLColumn col
 
 ADQLOperand ValueExpression(): {ADQLOperand valueExpr = null; Token left, right; } {
 	try{
-		(LOOKAHEAD((<PLUS>|<MINUS>) | (Factor() (<PLUS>|<MINUS>|<ASTERISK>|<DIVIDE>))) valueExpr=NumericExpression()
+		(LOOKAHEAD((<PLUS>|<MINUS>) | (Factor() (<PLUS>|<MINUS>|<ASTERISK>|<DIVIDE>|<MODULO>))) valueExpr=NumericExpression()
 		| LOOKAHEAD(<COORDSYS> | (StringFactor() <CONCAT>)) valueExpr=StringExpression()
 		| LOOKAHEAD(<LEFT_PAR>) left=<LEFT_PAR> valueExpr=ValueExpression() right=<RIGHT_PAR> { valueExpr = queryFactory.createWrappedOperand(valueExpr); ((WrappedOperand)valueExpr).setPosition(new TextPosition(left, right)); }
 		| LOOKAHEAD(<REGULAR_IDENTIFIER> <LEFT_PAR>) valueExpr=UserDefinedFunction()
@@ -1251,7 +1252,7 @@ ADQLOperand NumericExpression(): {Token sign=null; ADQLOperand leftOp, rightOp=n
 }
 
 ADQLOperand NumericTerm(): {Token sign=null; ADQLOperand leftOp, rightOp=null;} {
-	(leftOp=Factor() ((sign=<ASTERISK> | sign=<DIVIDE>) rightOp=NumericTerm())?)
+	(leftOp=Factor() ((sign=<ASTERISK> | sign=<DIVIDE> | sign=<MODULO>) rightOp=NumericTerm())?)
 	{
 	if (sign == null)
 		return leftOp;
