@@ -18,6 +18,7 @@ import org.postgresql.util.PGobject;
 
 import adql.db.DBType;
 import adql.db.DBType.DBDatatype;
+import adql.db.STCS;
 import adql.db.STCS.Region;
 import adql.parser.ParseException;
 import adql.query.operand.NumericConstant;
@@ -28,6 +29,14 @@ import adql.query.operand.function.geometry.GeometryFunction;
 import adql.query.operand.function.geometry.GeometryFunction.GeometryValue;
 
 public class TestPgSphereTranslator {
+
+    /*
+     * Unexplained fix factor.
+     * This prevents an initialization error in TestDBChecker and TestSTCS.
+     * Without this, the initialization of COORD_SYS_SYNTAX gets a null value for Frame.regexp.
+     * The bug only shows up when you run the TestDBChecker or TestSTCS after TestPgSphereTranslator using the Maven Surefire plugin.
+     */
+    protected static final String fudge = STCS.COORD_SYS_SYNTAX;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception{}

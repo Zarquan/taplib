@@ -2,20 +2,20 @@ package adql.db;
 
 /*
  * This file is part of ADQLLibrary.
- * 
+ *
  * ADQLLibrary is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * ADQLLibrary is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with ADQLLibrary.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2014-2017 - Astronomisches Rechen Institut (ARI)
  */
 
@@ -41,11 +41,11 @@ import adql.query.operand.function.geometry.RegionFunction;
 /**
  * <p>This class helps dealing with the subset of STC-S expressions described by the section "6 Use of STC-S in TAP (informative)"
  * of the TAP Recommendation 1.0 (27th March 2010). This subset is limited to the most common coordinate systems and regions.</p>
- * 
+ *
  * <p><i>Note:
  * 	No instance of this class can be created. Its usage is only limited to its static functions and classes.
  * </i></p>
- * 
+ *
  * <h3>Coordinate system</h3>
  * <p>
  * 	The function {@link #parseCoordSys(String)} is able to parse a string containing only the STC-S expression of a coordinate system
@@ -57,7 +57,7 @@ import adql.query.operand.function.geometry.RegionFunction;
  * 	and to call the function {@link CoordSys#toSTCS()}. The static function {@link #toSTCS(CoordSys)} is just calling the
  * 	{@link CoordSys#toSTCS()} on the given coordinate system.
  * </p>
- * 
+ *
  * <h3>Geometrical region</h3>
  * <p>
  * 	As for the coordinate system, there is a static function to parse the STC-S representation of a geometrical region: {@link #parseRegion(String)}.
@@ -76,7 +76,7 @@ import adql.query.operand.function.geometry.RegionFunction;
  * 	The conversion from {@link ADQLFunction} to {@link Region} or STC-S is possible only if the {@link ADQLFunction} contains constants as parameter.
  * 	Thus, a such function using a column, a concatenation, a math operation or using another function can not be converted into STC-S using this class.
  * </i></p>
- * 
+ *
  * @author Gr&eacute;gory Mantelet (ARI)
  * @version 1.4 (04/2017)
  * @since 1.3
@@ -115,13 +115,13 @@ public final class STCS {
 	private final static Pattern allowedCoordSysPattern = Pattern.compile(allowedCoordSysRegExp);
 
 	/** Human description of the syntax of a full coordinate system expression. */
-	private final static String COORD_SYS_SYNTAX = "\"[" + Frame.regexp + "] [" + RefPos.regexp + "] [" + Flavor.regexp + "]\" ; an empty string is also allowed and will be interpreted as the coordinate system locally used";
+	public final static String COORD_SYS_SYNTAX = "\"[" + Frame.regexp + "] [" + RefPos.regexp + "] [" + Flavor.regexp + "]\" ; an empty string is also allowed and will be interpreted as the coordinate system locally used";
 
 	/**
 	 * Build the regular expression of a string defining the allowed values for one part of the whole coordinate system.
-	 * 
+	 *
 	 * @param rootRegExp	All allowed part values.
-	 * 
+	 *
 	 * @return	The corresponding regular expression.
 	 */
 	private static String buildAllowedRegExp(final String rootRegExp){
@@ -130,18 +130,18 @@ public final class STCS {
 
 	/**
 	 * <p>List of all possible frames in an STC expression.</p>
-	 * 
+	 *
 	 * <p>
 	 * 	When no value is specified, the default one is {@link #UNKNOWNFRAME}.
 	 * 	The default value is also accessible through the attribute {@link #DEFAULT}
 	 * 	and it is possible to test whether a frame is the default with the function {@link #isDefault()}.
 	 * </p>
-	 * 
+	 *
 	 * <p><i>Note:
 	 * 	The possible values listed in this enumeration are limited to the subset of STC-S described by the section "6 Use of STC-S in TAP (informative)"
 	 * 	of the TAP Recommendation 1.0 (27th March 2010).
 	 * </i></p>
-	 * 
+	 *
 	 * @author Gr&eacute;gory Mantelet (ARI)
 	 * @version 1.4 (04/2017)
 	 * @since 1.3
@@ -158,7 +158,7 @@ public final class STCS {
 
 		/**
 		 * Tell whether this frame is the default one.
-		 * 
+		 *
 		 * @return	<i>true</i> if this is the default frame, <i>false</i>
 		 */
 		public final boolean isDefault(){
@@ -168,18 +168,18 @@ public final class STCS {
 
 	/**
 	 * <p>List of all possible reference positions in an STC expression.</p>
-	 * 
+	 *
 	 * <p>
 	 * 	When no value is specified, the default one is {@link #UNKNOWNREFPOS}.
 	 * 	The default value is also accessible through the attribute {@link #DEFAULT}
 	 * 	and it is possible to test whether a reference position is the default with the function {@link #isDefault()}.
 	 * </p>
-	 * 
+	 *
 	 * <p><i>Note:
 	 * 	The possible values listed in this enumeration are limited to the subset of STC-S described by the section "6 Use of STC-S in TAP (informative)"
 	 * 	of the TAP Recommendation 1.0 (27th March 2010).
 	 * </i></p>
-	 * 
+	 *
 	 * @author Gr&eacute;gory Mantelet (ARI)
 	 * @version 1.3 (10/2014)
 	 * @since 1.3
@@ -196,7 +196,7 @@ public final class STCS {
 
 		/**
 		 * Tell whether this reference position is the default one.
-		 * 
+		 *
 		 * @return	<i>true</i> if this is the default reference position, <i>false</i>
 		 */
 		public final boolean isDefault(){
@@ -206,18 +206,18 @@ public final class STCS {
 
 	/**
 	 * <p>List of all possible flavors in an STC expression.</p>
-	 * 
+	 *
 	 * <p>
 	 * 	When no value is specified, the default one is {@link #SPHERICAL2}.
 	 * 	The default value is also accessible through the attribute {@link #DEFAULT}
 	 * 	and it is possible to test whether a flavor is the default with the function {@link #isDefault()}.
 	 * </p>
-	 * 
+	 *
 	 * <p><i>Note:
 	 * 	The possible values listed in this enumeration are limited to the subset of STC-S described by the section "6 Use of STC-S in TAP (informative)"
 	 * 	of the TAP Recommendation 1.0 (27th March 2010).
 	 * </i></p>
-	 * 
+	 *
 	 * @author Gr&eacute;gory Mantelet (ARI)
 	 * @version 1.3 (10/2014)
 	 * @since 1.3
@@ -234,7 +234,7 @@ public final class STCS {
 
 		/**
 		 * Tell whether this flavor is the default one.
-		 * 
+		 *
 		 * @return	<i>true</i> if this is the default flavor, <i>false</i>
 		 */
 		public final boolean isDefault(){
@@ -244,11 +244,11 @@ public final class STCS {
 
 	/**
 	 * Build a regular expression covering all possible values of the given enumeration.
-	 * 
+	 *
 	 * @param enumType	Class of an enumeration type.
-	 * 
+	 *
 	 * @return	The build regular expression or "\s*" if the given enumeration contains no constants/values.
-	 * 
+	 *
 	 * @throws IllegalArgumentException	If the given class is not an enumeration type.
 	 */
 	private static String buildRegexp(final Class<?> enumType) throws IllegalArgumentException{
@@ -273,30 +273,30 @@ public final class STCS {
 
 	/**
 	 * <p>Object representation of an STC coordinate system.</p>
-	 * 
+	 *
 	 * <p>
 	 * 	A coordinate system is composed of three parts: a frame ({@link #frame}),
 	 * 	a reference position ({@link #refpos}) and a flavor ({@link #flavor}).
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * 	The default value - also corresponding to an empty string - should be:
 	 * 	{@link Frame#UNKNOWNFRAME} {@link RefPos#UNKNOWNREFPOS} {@link Flavor#SPHERICAL2}.
 	 * 	Once built, it is possible to know whether the coordinate system is the default one
 	 * 	or not thanks to function {@link #isDefault()}.
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * 	An instance of this class can be easily serialized into STC-S using {@link #toSTCS()}, {@link #toFullSTCS()}
 	 * 	or {@link #toString()}. {@link #toFullSTCS()} will display default values explicitly
 	 * 	on the contrary to {@link #toSTCS()} which will replace them by empty strings.
 	 * </p>
-	 * 
+	 *
 	 * <p><i><b>Important note:</b>
 	 * 	The flavors CARTESIAN2 and CARTESIAN3 can not be used with other frame and reference position than
 	 * 	UNKNOWNFRAME and UNKNOWNREFPOS. In the contrary case an {@link IllegalArgumentException} is throw.
 	 * </i></p>
-	 * 
+	 *
 	 * @author Gr&eacute;gory Mantelet (ARI)
 	 * @version 1.3 (10/2014)
 	 * @since 1.3
@@ -329,11 +329,11 @@ public final class STCS {
 
 		/**
 		 * Build a coordinate system with the given parts.
-		 * 
+		 *
 		 * @param fr	Frame part.
 		 * @param rp	Reference position part.
 		 * @param fl	Flavor part.
-		 * 
+		 *
 		 * @throws IllegalArgumentException	If a cartesian flavor is used with a frame and reference position other than UNKNOWNFRAME and UNKNOWNREFPOS.
 		 */
 		public CoordSys(final Frame fr, final RefPos rp, final Flavor fl) throws IllegalArgumentException{
@@ -352,9 +352,9 @@ public final class STCS {
 
 		/**
 		 * Build a coordinate system by parsing the given STC-S expression.
-		 * 
+		 *
 		 * @param coordsys	STC-S expression representing a coordinate system. <i>Empty string and NULL are allowed values ; they correspond to a default coordinate system.</i>
-		 * 
+		 *
 		 * @throws ParseException	If the syntax of the given STC-S expression is wrong or if it is not a coordinate system only.
 		 */
 		public CoordSys(final String coordsys) throws ParseException{
@@ -369,7 +369,7 @@ public final class STCS {
 
 		/**
 		 * Tell whether this is the default coordinate system (UNKNOWNFRAME UNKNOWNREFPOS SPHERICAL2).
-		 * 
+		 *
 		 * @return	<i>true</i> if it is the default coordinate system, <i>false</i> otherwise.
 		 */
 		public final boolean isDefault(){
@@ -379,7 +379,7 @@ public final class STCS {
 		/**
 		 * Get the STC-S expression of this coordinate system,
 		 * in which default values are not written (they are replaced by empty strings).
-		 * 
+		 *
 		 * @return	STC-S representation of this coordinate system.
 		 */
 		public String toSTCS(){
@@ -389,7 +389,7 @@ public final class STCS {
 		/**
 		 * Get the STC-S expression of this coordinate system,
 		 * in which default values are explicitly written.
-		 * 
+		 *
 		 * @return	STC-S representation of this coordinate system.
 		 */
 		public String toFullSTCS(){
@@ -398,7 +398,7 @@ public final class STCS {
 
 		/**
 		 * Convert this coordinate system into a STC-S expression.
-		 * 
+		 *
 		 * @see java.lang.Object#toString()
 		 * @see #toSTCS()
 		 */
@@ -410,11 +410,11 @@ public final class STCS {
 
 	/**
 	 * Parse the given STC-S representation of a coordinate system.
-	 * 
+	 *
 	 * @param stcs	STC-S expression of a coordinate system. <i>Note: a NULL or empty string will be interpreted as a default coordinate system.</i>
-	 * 
+	 *
 	 * @return	The object representation of the specified coordinate system.
-	 * 
+	 *
 	 * @throws ParseException	If the given expression has a wrong STC-S syntax.
 	 */
 	public static CoordSys parseCoordSys(final String stcs) throws ParseException{
@@ -423,17 +423,17 @@ public final class STCS {
 
 	/**
 	 * <p>Convert an object representation of a coordinate system into an STC-S expression.</p>
-	 * 
+	 *
 	 * <p><i>Note:
 	 * 	A NULL object will be interpreted as the default coordinate system and so an empty string will be returned.
 	 * 	Otherwise, this function is equivalent to {@link CoordSys#toSTCS()} (in which default values for each
 	 * 	coordinate system part is not displayed).
 	 * </i></p>
-	 * 
+	 *
 	 * @param coordSys	The object representation of the coordinate system to convert into STC-S.
-	 * 
+	 *
 	 * @return	The corresponding STC-S expression.
-	 * 
+	 *
 	 * @see CoordSys#toSTCS()
 	 * @see CoordSys#toFullSTCS()
 	 */
@@ -446,34 +446,34 @@ public final class STCS {
 
 	/**
 	 * <p>Build a big regular expression gathering all of the given coordinate system syntaxes.</p>
-	 * 
+	 *
 	 * <p>
 	 * 	Each item of the given list must respect a strict syntax. Each part of the coordinate system
 	 * 	may be a single value, a list of values or a '*' (meaning all values are allowed).
 	 * 	A list of values must have the following syntax: <code>({value1}|{value2}|...)</code>.
 	 * 	An empty string is NOT here accepted.
 	 * </p>
-	 * 
+	 *
 	 * <p><i>Example:
 	 * 	<code>(ICRS|FK4|FK5) * SPHERICAL2</code> is OK,
 	 * 	but <code>(ICRS|FK4|FK5) *</code> is not valid because the flavor value is not defined.
 	 * </i></p>
-	 * 
+	 *
 	 * <p>
 	 * 	Since the default value of each part of a coordinate system should always be possible,
 	 * 	this function ensure these default values are always possible in the returned regular expression.
 	 * 	Thus, if some values except the default one are specified, the default value is automatically appended.
 	 * </p>
-	 * 
+	 *
 	 * <p><i>Note:
 	 * 	If the given array is NULL, all coordinate systems are allowed.
 	 * 	But if the given array is empty, none except an empty string or the default value will be allowed.
 	 * </i></p>
-	 * 
+	 *
 	 * @param allowedCoordSys	List of all coordinate systems that are allowed.
-	 * 
+	 *
 	 * @return	The corresponding regular expression.
-	 * 
+	 *
 	 * @throws ParseException	If the syntax of one of the given allowed coordinate system is wrong.
 	 */
 	public static String buildCoordSysRegExp(final String[] allowedCoordSys) throws ParseException{
@@ -545,10 +545,10 @@ public final class STCS {
 
 	/**
 	 * Get the default value appended by a '|' character, ONLY IF the given value does not already contain the default value.
-	 * 
+	 *
 	 * @param g		Index of the coordinate system part (0: Frame, 1: RefPos, 2: Flavor, another value will return an empty string).
 	 * @param value	Value in which the default value must prefix.
-	 * 
+	 *
 	 * @return	A prefix for the given value (the default value and a '|' if the default value is not already in the given value, "" otherwise).
 	 */
 	private static String defaultChoice(final int g, final String value){
@@ -570,12 +570,12 @@ public final class STCS {
 
 	/**
 	 * <p>List all possible region types allowed in an STC-S expression.</p>
-	 * 
+	 *
 	 * <p><i>Note:
 	 * 	The possible values listed in this enumeration are limited to the subset of STC-S described by the section "6 Use of STC-S in TAP (informative)"
 	 * 	of the TAP Recommendation 1.0 (27th March 2010).
 	 * </i></p>
-	 * 
+	 *
 	 * @author Gr&eacute;gory Mantelet (ARI)
 	 * @version 1.3 (10/2014)
 	 * @since 1.3
@@ -586,18 +586,18 @@ public final class STCS {
 
 	/**
 	 * <p>Object representation of an STC region.</p>
-	 * 
+	 *
 	 * <p>
 	 * 	This class contains a field for each possible parameter of a region. Depending of the region type
 	 * 	some are not used. In such case, these unused fields are set to NULL.
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * 	An instance of this class can be easily serialized into STC-S using {@link #toSTCS()}, {@link #toFullSTCS()}
 	 * 	or {@link #toString()}. {@link #toFullSTCS()} will display default value explicit
 	 * 	on the contrary to {@link #toSTCS()} which will replace them by empty strings.
 	 * </p>
-	 * 
+	 *
 	 * @author Gr&eacute;gory Mantelet (ARI)
 	 * @version 1.3 (10/2014)
 	 * @since 1.3
@@ -640,11 +640,11 @@ public final class STCS {
 
 		/**
 		 * <p>Constructor for a POINT/POSITION region.</p>
-		 * 
+		 *
 		 * <p><i><b>Important note:</b>
 		 * 	The array of coordinates is used like that. No copy is done.
 		 * </i></p>
-		 * 
+		 *
 		 * @param coordSys		Coordinate system. <i>note: It MAY BE null ; if so, the default coordinate system will be chosen</li>
 		 * @param coordinates	A pair of coordinates ; coordinates[0] and coordinates[1].
 		 */
@@ -654,17 +654,17 @@ public final class STCS {
 
 		/**
 		 * <p>Constructor for a POINT/POSITION or a POLYGON region.</p>
-		 * 
+		 *
 		 * <p>Whether it is a polygon or a point depends on the number of given coordinates:</p>
 		 * <ul>
 		 * 	<li>1 item => POINT/POSITION</li>
 		 * 	<li>more items => POLYGON</li>
 		 * </ul>
-		 * 
+		 *
 		 * <p><i><b>Important note:</b>
 		 * 	The array of coordinates is used like that. No copy is done.
 		 * </i></p>
-		 * 
+		 *
 		 * @param coordSys		Coordinate system. <i>note: It MAY BE null ; if so, the default coordinate system will be chosen</li>
 		 * @param coordinates	List of coordinates' pairs ; coordinates[n] = 1 pair = 2 items (coordinates[n][0] and coordinates[n][1]) ; if 1 pair, it is a POINT/POSITION, but if more, it is a POLYGON.
 		 */
@@ -693,11 +693,11 @@ public final class STCS {
 
 		/**
 		 * <p>Constructor for a CIRCLE region.</p>
-		 * 
+		 *
 		 * <p><i><b>Important note:</b>
 		 * 	The array of coordinates is used like that. No copy is done.
 		 * </i></p>
-		 * 
+		 *
 		 * @param coordSys		Coordinate system. <i>note: It MAY BE null ; if so, the default coordinate system will be chosen</li>
 		 * @param coordinates	A pair of coordinates ; coordinates[0] and coordinates[1].
 		 * @param radius		The circle radius.
@@ -729,11 +729,11 @@ public final class STCS {
 
 		/**
 		 * <p>Constructor for a BOX region.</p>
-		 * 
+		 *
 		 * <p><i><b>Important note:</b>
 		 * 	The array of coordinates is used like that. No copy is done.
 		 * </i></p>
-		 * 
+		 *
 		 * @param coordSys		Coordinate system. <i>note: It MAY BE null ; if so, the default coordinate system will be chosen</li>
 		 * @param coordinates	A pair of coordinates ; coordinates[0] and coordinates[1].
 		 * @param width			Width of the box.
@@ -766,11 +766,11 @@ public final class STCS {
 
 		/**
 		 * <p>Constructor for a UNION or INTERSECTION region.</p>
-		 * 
+		 *
 		 * <p><i><b>Important note:</b>
 		 * 	The array of regions is used like that. No copy is done.
 		 * </i></p>
-		 * 
+		 *
 		 * @param unionOrIntersection	Type of the region to create. <i>Note: It can be ONLY a UNION or INTERSECTION. Another value will throw an IllegalArgumentException).</i>
 		 * @param coordSys				Coordinate system. <i>note: It MAY BE null ; if so, the default coordinate system will be chosen</li>
 		 * @param regions				Regions to unite or to intersect. <i>Note: At least two regions must be provided.</i>
@@ -806,7 +806,7 @@ public final class STCS {
 
 		/**
 		 * Constructor for a NOT region.
-		 * 
+		 *
 		 * @param region	Any region to not select.
 		 */
 		public Region(final Region region){
@@ -830,14 +830,14 @@ public final class STCS {
 
 		/**
 		 * <p>Build a Region from the given ADQL representation.</p>
-		 * 
+		 *
 		 * <p><i>Note:
 		 * 	Only {@link PointFunction}, {@link CircleFunction}, {@link BoxFunction}, {@link PolygonFunction} and {@link RegionFunction}
 		 * 	are accepted here. Other extensions of {@link GeometryFunction} will throw an {@link IllegalArgumentException}.
 		 * </i></p>
-		 * 
+		 *
 		 * @param geometry	The ADQL representation of the region to create here.
-		 * 
+		 *
 		 * @throws IllegalArgumentException	If the given geometry is neither of {@link PointFunction}, {@link BoxFunction}, {@link PolygonFunction} and {@link RegionFunction}.
 		 * @throws ParseException			If the declared coordinate system, the coordinates or the STC-S definition has a wrong syntax.
 		 */
@@ -896,11 +896,11 @@ public final class STCS {
 		/**
 		 * Extract a string value from the given {@link ADQLOperand}
 		 * which is <b>expected to be a {@link StringConstant} instance</b>.
-		 * 
+		 *
 		 * @param op	A string operand.
-		 * 
+		 *
 		 * @return	The string value embedded in the given operand.
-		 * 
+		 *
 		 * @throws ParseException	If the given operand is not an instance of {@link StringConstant}.
 		 */
 		private static String extractString(final ADQLOperand op) throws ParseException{
@@ -916,11 +916,11 @@ public final class STCS {
 		 * Extract a numeric value from the given {@link ADQLOperand}
 		 * which is <b>expected to be a {@link NumericConstant} instance</b>
 		 * or a {@link NegativeOperand} embedding a {@link NumericConstant}.
-		 * 
+		 *
 		 * @param op	A numeric operand.
-		 * 
+		 *
 		 * @return	The numeric value embedded in the given operand.
-		 * 
+		 *
 		 * @throws ParseException	If the given operand is not an instance of {@link NumericConstant} or a {@link NegativeOperand}.
 		 */
 		private static double extractNumeric(final ADQLOperand op) throws ParseException{
@@ -937,12 +937,12 @@ public final class STCS {
 		/**
 		 * <p>Get the STC-S representation of this region (in which default values
 		 * of the coordinate system are not written ; they are replaced by empty strings).</p>
-		 * 
+		 *
 		 * <p><i>Note:
 		 * 	This function build the STC-S just once and store it in a class attribute.
 		 * 	The value of this attribute is then returned at next calls of this function.
 		 * </i></p>
-		 * 
+		 *
 		 * @return	Its STC-S representation.
 		 */
 		public String toSTCS(){
@@ -991,12 +991,12 @@ public final class STCS {
 		/**
 		 * <p>Get the STC-S representation of this region (in which default values
 		 * of the coordinate system are explicitly written).</p>
-		 * 
+		 *
 		 * <p><i>Note:
 		 * 	This function build the STC-S just once and store it in a class attribute.
 		 * 	The value of this attribute is then returned at next calls of this function.
 		 * </i></p>
-		 * 
+		 *
 		 * @return	Its STC-S representation.
 		 */
 		public String toFullSTCS(){
@@ -1044,7 +1044,7 @@ public final class STCS {
 
 		/**
 		 * Append all the given coordinates to the given buffer.
-		 * 
+		 *
 		 * @param buf		Buffer in which coordinates must be appended.
 		 * @param coords	Coordinates to append.
 		 */
@@ -1058,7 +1058,7 @@ public final class STCS {
 
 		/**
 		 * Append all the given regions in the given buffer.
-		 * 
+		 *
 		 * @param buf			Buffer in which regions must be appended.
 		 * @param regions		Regions to append.
 		 * @param fullCoordSys	Indicate whether the coordinate system of the regions must explicitly display the default values.
@@ -1081,7 +1081,7 @@ public final class STCS {
 
 		/**
 		 * <p>Convert this region into its corresponding ADQL representation.</p>
-		 * 
+		 *
 		 * <ul>
 		 * 	<li><b>POSITION:</b> {@link PointFunction}</li>
 		 * 	<li><b>CIRCLE:</b> {@link CircleFunction}</li>
@@ -1089,13 +1089,13 @@ public final class STCS {
 		 * 	<li><b>POLYGON:</b> {@link PolygonFunction}</li>
 		 * 	<li><b>UNION, INTERSECTION, NOT:</b> {@link RegionFunction}</li>
 		 * </ul>
-		 * 
+		 *
 		 * <p><i>Note:
 		 * 	This function is using the default ADQL factory, built using {@link ADQLQueryFactory#ADQLQueryFactory()}.
 		 * </i></p>
-		 * 
+		 *
 		 * @return	The corresponding ADQL representation.
-		 * 
+		 *
 		 * @see #toGeometry(ADQLQueryFactory)
 		 */
 		public GeometryFunction toGeometry(){
@@ -1104,7 +1104,7 @@ public final class STCS {
 
 		/**
 		 * <p>Convert this region into its corresponding ADQL representation.</p>
-		 * 
+		 *
 		 * <ul>
 		 * 	<li><b>POSITION:</b> {@link PointFunction}</li>
 		 * 	<li><b>CIRCLE:</b> {@link CircleFunction}</li>
@@ -1112,14 +1112,14 @@ public final class STCS {
 		 * 	<li><b>POLYGON:</b> {@link PolygonFunction}</li>
 		 * 	<li><b>UNION, INTERSECTION, NOT:</b> {@link RegionFunction}</li>
 		 * </ul>
-		 * 
+		 *
 		 * <p><i>Note:
 		 * 	This function build the ADQL representation just once and store it in a class attribute.
 		 * 	The value of this attribute is then returned at next calls of this function.
 		 * </i></p>
-		 * 
+		 *
 		 * @param factory	The factory of ADQL objects to use.
-		 * 
+		 *
 		 * @return	The corresponding ADQL representation.
 		 */
 		public GeometryFunction toGeometry(ADQLQueryFactory factory){
@@ -1156,17 +1156,17 @@ public final class STCS {
 
 		/**
 		 * <p>Convert a numeric value into an ADQL representation:</p>
-		 * 
+		 *
 		 * <ul>
 		 * 	<li>If negative: NegativeOperand(NumericConstant(val))</li>
 		 * 	<li>Otherwise: NumericConstant(val)</li>
 		 * </ul>
-		 * 
+		 *
 		 * @param val		The value to embed in an ADQL object.
 		 * @param factory	The factory to use to created ADQL objects.
-		 * 
+		 *
 		 * @return	The representing ADQL representation.
-		 * 
+		 *
 		 * @throws Exception	If an error occurs while creating the ADQL object.
 		 */
 		private ADQLOperand toNumericObj(final double val, final ADQLQueryFactory factory) throws Exception{
@@ -1179,11 +1179,11 @@ public final class STCS {
 
 	/**
 	 * Parse the given STC-S expression representing a geometrical region.
-	 * 
+	 *
 	 * @param stcsRegion	STC-S expression of a region. <i>Note: MUST be different from NULL.</i>
-	 * 
+	 *
 	 * @return	The object representation of the specified geometrical region.
-	 * 
+	 *
 	 * @throws ParseException	If the given expression is NULL, empty string or if the STC-S syntax is wrong.
 	 */
 	public static Region parseRegion(final String stcsRegion) throws ParseException{
@@ -1194,9 +1194,9 @@ public final class STCS {
 
 	/**
 	 * Convert into STC-S the given object representation of a geometrical region.
-	 * 
+	 *
 	 * @param region	Region to convert into STC-S.
-	 * 
+	 *
 	 * @return	The corresponding STC-S expression.
 	 */
 	public static String toSTCS(final Region region){
@@ -1207,17 +1207,17 @@ public final class STCS {
 
 	/**
 	 * <p>Convert into STC-S the given ADQL representation of a geometrical function.</p>
-	 * 
+	 *
 	 * <p><i><b>Important note:</b>
 	 * 	Only {@link PointFunction}, {@link CircleFunction}, {@link BoxFunction}, {@link PolygonFunction}
 	 * 	and {@link RegionFunction} are accepted here. Other extensions of {@link GeometryFunction} will
 	 * 	throw an {@link IllegalArgumentException}.
 	 * </i></p>
-	 * 
+	 *
 	 * @param region	ADQL representation of the region to convert into STC-S.
-	 * 
+	 *
 	 * @return	The corresponding STC-S expression.
-	 * 
+	 *
 	 * @throws ParseException	If the given object is NULL or not of the good type.
 	 */
 	public static String toSTCS(final GeometryFunction region) throws ParseException{
@@ -1232,7 +1232,7 @@ public final class STCS {
 
 	/**
 	 * Let parse any STC-S expression.
-	 * 
+	 *
 	 * @author Gr&eacute;gory Mantelet (ARI)
 	 * @version 1.3 (11/2014)
 	 * @since 1.3
@@ -1253,7 +1253,7 @@ public final class STCS {
 		/**
 		 * Exception sent when the end of the expression
 		 * (EOE = End Of Expression) is reached.
-		 * 
+		 *
 		 * @author Gr&eacute;gory Mantelet (ARI)
 		 * @version 1.3 (10/2014)
 		 * @since 1.3
@@ -1274,11 +1274,11 @@ public final class STCS {
 
 		/**
 		 * Parse the given STC-S expression, expected as a coordinate system.
-		 * 
+		 *
 		 * @param stcs	The STC-S expression to parse.
-		 * 
+		 *
 		 * @return	The corresponding object representation of the specified coordinate system.
-		 * 
+		 *
 		 * @throws ParseException	If the syntax of the given STC-S expression is wrong or if it is not a coordinate system.
 		 */
 		public CoordSys parseCoordSys(final String stcs) throws ParseException{
@@ -1296,11 +1296,11 @@ public final class STCS {
 
 		/**
 		 * Parse the given STC-S expression, expected as a geometrical region.
-		 * 
+		 *
 		 * @param stcs	The STC-S expression to parse.
-		 * 
+		 *
 		 * @return	The corresponding object representation of the specified geometrical region.
-		 * 
+		 *
 		 * @throws ParseException	If the syntax of the given STC-S expression is wrong or if it is not a geometrical region.
 		 */
 		public Region parseRegion(final String stcs) throws ParseException{
@@ -1312,7 +1312,7 @@ public final class STCS {
 
 		/**
 		 * Prepare the parser in order to read the given STC-S expression.
-		 * 
+		 *
 		 * @param newStcs	New STC-S expression to parse from now.
 		 */
 		private void init(final String newStcs){
@@ -1325,10 +1325,10 @@ public final class STCS {
 		/**
 		 * Finalize the parsing.
 		 * No more characters (except eventually some space characters) should remain in the STC-S expression to parse.
-		 * 
+		 *
 		 * @param expectedSyntax	Description of the good syntax expected. This description is used only to write the
 		 *                      	{@link ParseException} in case other non-space characters are found among the remaining characters.
-		 * 
+		 *
 		 * @throws ParseException	If other non-space characters remains.
 		 */
 		private void end(final String expectedSyntax) throws ParseException{
@@ -1355,13 +1355,13 @@ public final class STCS {
 
 		/**
 		 * <p>Get the next meaningful word. This word can be a numeric, any string constant or a region type.</p>
-		 * 
+		 *
 		 * <p>
 		 * 	In case the end of the expression is reached before getting any meaningful character, an {@link EOEException} is thrown.
 		 * </p>
-		 * 
+		 *
 		 * @return	The full read word/token.
-		 * 
+		 *
 		 * @throws EOEException	If the end of the STC-S expression is reached before getting any meaningful character.
 		 */
 		private String nextToken() throws EOEException{
@@ -1386,9 +1386,9 @@ public final class STCS {
 		/**
 		 * Read the next token as a numeric.
 		 * If not a numeric, a {@link ParseException} is thrown.
-		 * 
+		 *
 		 * @return	The read numerical value.
-		 * 
+		 *
 		 * @throws ParseException	If the next token is not a numerical expression.
 		 */
 		private double numeric() throws ParseException{
@@ -1401,9 +1401,9 @@ public final class STCS {
 		/**
 		 * Read the next 2 tokens as a coordinate pairs (so as 2 numerical values).
 		 * If not 2 numeric, a {@link ParseException} is thrown.
-		 * 
+		 *
 		 * @return	The read coordinate pairs.
-		 * 
+		 *
 		 * @throws ParseException	If the next 2 tokens are not 2 numerical expressions.
 		 */
 		private double[] coordPair() throws ParseException{
@@ -1422,9 +1422,9 @@ public final class STCS {
 		/**
 		 * Read and parse the next tokens as a coordinate system expression.
 		 * If they do not match, a {@link ParseException} is thrown.
-		 * 
+		 *
 		 * @return	The object representation of the read coordinate system.
-		 * 
+		 *
 		 * @throws ParseException	If the next tokens are not representing a valid coordinate system.
 		 */
 		private CoordSys coordSys() throws ParseException{
@@ -1483,7 +1483,7 @@ public final class STCS {
 
 		/**
 		 * Parse the last read token as FRAME.
-		 * 
+		 *
 		 * @return	The corresponding enumeration item, or NULL if the last token is not a valid FRAME item.
 		 */
 		private Frame frame(){
@@ -1496,7 +1496,7 @@ public final class STCS {
 
 		/**
 		 * Parse the last read token as REFERENCE POSITION.
-		 * 
+		 *
 		 * @return	The corresponding enumeration item, or NULL if the last token is not a valid REFERENCE POSITION item.
 		 */
 		private RefPos refpos(){
@@ -1509,7 +1509,7 @@ public final class STCS {
 
 		/**
 		 * Parse the last read token as FLAVOR.
-		 * 
+		 *
 		 * @return	The corresponding enumeration item, or NULL if the last token is not a valid FLAVOR item.
 		 */
 		private Flavor flavor(){
@@ -1523,9 +1523,9 @@ public final class STCS {
 		/**
 		 * Read and parse the next tokens as a geometrical region.
 		 * If they do not match, a {@link ParseException} is thrown.
-		 * 
+		 *
 		 * @return	The object representation of the read geometrical region.
-		 * 
+		 *
 		 * @throws ParseException	If the next tokens are not representing a valid geometrical region.
 		 */
 		private Region region() throws ParseException{
@@ -1664,11 +1664,11 @@ public final class STCS {
 
 		/**
 		 * Build a {@link ParseException} based on the given one and by adding the human description of what was expected, if needed.
-		 * 
+		 *
 		 * @param ex				Root exception.
 		 * @param expectedSyntax	Human description of what was expected.
 		 * @param startPos			Position of the first character of the wrong part of expression.
-		 * 
+		 *
 		 * @return	The build exception.
 		 */
 		private ParseException buildException(final Exception ex, final String expectedSyntax, int startPos){
