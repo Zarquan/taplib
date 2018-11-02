@@ -187,14 +187,10 @@
                 <version>2.6</version>
                 <configuration>
                     <sourceDirectory>${basedir}/src/adql/parser</sourceDirectory>
+                    <outputDirectory>${project.build.directory}/generated-sources/javacc</outputDirectory>
+                    <buildParser>true</buildParser>
+                    <buildTokenManager>true</buildTokenManager>
                 </configuration>
-                <!--executions>
-                    <execution>
-                        <goals>
-                            <goal>javacc</goal>
-                        </goals>
-                    </execution>
-                </executions-->
             </plugin>
 
             <plugin>
