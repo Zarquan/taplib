@@ -766,6 +766,16 @@ TOKEN : {
 |	< #DIGIT: ["0"-"9"] >
 }
 
+/* *************** */
+/* Hexadecimal numbers */
+/* *************** */
+TOKEN : {
+	< HEX_PREFIX: "0x" >
+|	< HEX_INTEGER: (<HEX_PREFIX>(<HEX_DIGIT>)+) >
+|	< #HEX_DIGIT: ["0"-"9","a"-"f","A"-"F"] >
+}
+
+
 							/* ########## */
 							/* # SYNTAX # */
 							/* ########## */
@@ -1131,7 +1141,8 @@ StringConstant String(): {Token t, start=null; String str=""; StringConstant cst
 NumericConstant UnsignedNumeric(): {Token t; NumericConstant cst;} {
 	(t=<SCIENTIFIC_NUMBER>
 	| t=<UNSIGNED_FLOAT>
-	| t=<UNSIGNED_INTEGER>)
+	| t=<UNSIGNED_INTEGER>
+    | t=<HEX_INTEGER>)
 	{		try{
 		  cst = queryFactory.createNumericConstant(t.image);
 		  cst.setPosition(new TextPosition(t));

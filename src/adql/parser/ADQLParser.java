@@ -777,6 +777,7 @@ public class ADQLParser implements ADQLParserConstants {
           case SCIENTIFIC_NUMBER:
           case UNSIGNED_FLOAT:
           case UNSIGNED_INTEGER:
+          case HEX_INTEGER:
             op = ValueExpression();
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case AS:
@@ -1455,6 +1456,9 @@ public class ADQLParser implements ADQLParserConstants {
       case UNSIGNED_INTEGER:
         t = jj_consume_token(UNSIGNED_INTEGER);
         break;
+      case HEX_INTEGER:
+        t = jj_consume_token(HEX_INTEGER);
+        break;
       default:
         jj_la1[42] = jj_gen;
         jj_consume_token(-1);
@@ -1555,6 +1559,7 @@ public class ADQLParser implements ADQLParserConstants {
         case SCIENTIFIC_NUMBER:
         case UNSIGNED_FLOAT:
         case UNSIGNED_INTEGER:
+        case HEX_INTEGER:
           // unsigned_value_specification
                             op = UnsignedNumeric();
                                         {if (true) return op;}
@@ -1606,6 +1611,7 @@ public class ADQLParser implements ADQLParserConstants {
         case SCIENTIFIC_NUMBER:
         case UNSIGNED_FLOAT:
         case UNSIGNED_INTEGER:
+        case HEX_INTEGER:
           op = UnsignedNumeric();
                                         {if (true) return op;}
           break;
@@ -1818,6 +1824,7 @@ public class ADQLParser implements ADQLParserConstants {
         case SCIENTIFIC_NUMBER:
         case UNSIGNED_FLOAT:
         case UNSIGNED_INTEGER:
+        case HEX_INTEGER:
           op = NumericValueExpressionPrimary();
           break;
         default:
@@ -1913,6 +1920,7 @@ public class ADQLParser implements ADQLParserConstants {
           case SCIENTIFIC_NUMBER:
           case UNSIGNED_FLOAT:
           case UNSIGNED_INTEGER:
+          case HEX_INTEGER:
             op = StringValueExpressionPrimary();
             break;
           default:
@@ -2180,6 +2188,7 @@ public class ADQLParser implements ADQLParserConstants {
             case SCIENTIFIC_NUMBER:
             case UNSIGNED_FLOAT:
             case UNSIGNED_INTEGER:
+            case HEX_INTEGER:
               op = ValueExpression();
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case EQUAL:
@@ -2438,6 +2447,7 @@ public class ADQLParser implements ADQLParserConstants {
           case SCIENTIFIC_NUMBER:
           case UNSIGNED_FLOAT:
           case UNSIGNED_INTEGER:
+          case HEX_INTEGER:
             op = ValueExpression();
             break;
           default:
@@ -2986,6 +2996,7 @@ public class ADQLParser implements ADQLParserConstants {
           case SCIENTIFIC_NUMBER:
           case UNSIGNED_FLOAT:
           case UNSIGNED_INTEGER:
+          case HEX_INTEGER:
             param1 = NumericExpression();
             break;
           default:
@@ -3177,6 +3188,7 @@ public class ADQLParser implements ADQLParserConstants {
       case SCIENTIFIC_NUMBER:
       case UNSIGNED_FLOAT:
       case UNSIGNED_INTEGER:
+      case HEX_INTEGER:
         op = ValueExpression();
                                                                    params.add(op);
         label_13:
@@ -3347,19 +3359,6 @@ public class ADQLParser implements ADQLParserConstants {
     try { return !jj_3_18(); }
     catch(LookaheadSuccess ls) { return true; }
     finally { jj_save(17, xla); }
-  }
-
-  private boolean jj_3R_128() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_scan_token(100)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(101)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(102)) return true;
-    }
-    }
-    return false;
   }
 
   private boolean jj_3R_129() {
@@ -3624,13 +3623,13 @@ public class ADQLParser implements ADQLParserConstants {
     return false;
   }
 
-  private boolean jj_3R_31() {
-    if (jj_scan_token(DELIMITED_IDENTIFIER)) return true;
+  private boolean jj_3R_133() {
+    if (jj_3R_21()) return true;
     return false;
   }
 
-  private boolean jj_3R_133() {
-    if (jj_3R_21()) return true;
+  private boolean jj_3R_31() {
+    if (jj_scan_token(DELIMITED_IDENTIFIER)) return true;
     return false;
   }
 
@@ -3708,16 +3707,16 @@ public class ADQLParser implements ADQLParserConstants {
     return false;
   }
 
+  private boolean jj_3_13() {
+    if (jj_3R_26()) return true;
+    return false;
+  }
+
   private boolean jj_3R_103() {
     if (jj_scan_token(COS)) return true;
     if (jj_scan_token(LEFT_PAR)) return true;
     if (jj_3R_112()) return true;
     if (jj_scan_token(RIGHT_PAR)) return true;
-    return false;
-  }
-
-  private boolean jj_3_13() {
-    if (jj_3R_26()) return true;
     return false;
   }
 
@@ -4465,14 +4464,14 @@ public class ADQLParser implements ADQLParserConstants {
     return false;
   }
 
-  private boolean jj_3R_16() {
-    if (jj_scan_token(LEFT_PAR)) return true;
-    if (jj_3R_33()) return true;
+  private boolean jj_3R_138() {
+    if (jj_3R_29()) return true;
     return false;
   }
 
-  private boolean jj_3R_138() {
-    if (jj_3R_29()) return true;
+  private boolean jj_3R_16() {
+    if (jj_scan_token(LEFT_PAR)) return true;
+    if (jj_3R_33()) return true;
     return false;
   }
 
@@ -4721,6 +4720,22 @@ public class ADQLParser implements ADQLParserConstants {
     return false;
   }
 
+  private boolean jj_3R_128() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(100)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(101)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(102)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(105)) return true;
+    }
+    }
+    }
+    return false;
+  }
+
   /** Generated Token Manager. */
   public ADQLParserTokenManager token_source;
   SimpleCharStream jj_input_stream;
@@ -4753,7 +4768,7 @@ public class ADQLParser implements ADQLParserConstants {
       jj_la1_2 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x47ffffff,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x40000000,0x0,0x0,0x0,0x0,0x0,0x40000000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x4,0x40000000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x47ffffff,0x0,0x0,0x0,0x0,0x0,0x0,0x47ffffff,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xb,0x0,0x0,0x7fffffb,0x7fffffb,0x0,0x0,0x7fff0,0x7f80000,0x0,0x47ffffff,};
    }
    private static void jj_la1_init_3() {
-      jj_la1_3 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x6,0x6,0x0,0x6,0x0,0x76,0x0,0x0,0x0,0x6,0x0,0x0,0x0,0x46,0x0,0x0,0x0,0x6,0x0,0x6,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x70,0x60,0x0,0x0,0x76,0x76,0x6,0x0,0x0,0x0,0x0,0x0,0x0,0x76,0x0,0x0,0x76,0x6,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x76,0x0,0x0,0x0,0x0,0x0,0x0,0x76,0x0,0x0,0x0,0x0,0x6,0x6,0x6,0x6,0x0,0x0,0x0,0x4,0x76,0x0,0x0,0x0,0x0,0x0,0x76,};
+      jj_la1_3 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x6,0x6,0x0,0x6,0x0,0x276,0x0,0x0,0x0,0x6,0x0,0x0,0x0,0x46,0x0,0x0,0x0,0x6,0x0,0x6,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x270,0x60,0x0,0x0,0x276,0x276,0x6,0x0,0x0,0x0,0x0,0x0,0x0,0x276,0x0,0x0,0x276,0x6,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x276,0x0,0x0,0x0,0x0,0x0,0x0,0x276,0x0,0x0,0x0,0x0,0x6,0x6,0x6,0x6,0x0,0x0,0x0,0x4,0x276,0x0,0x0,0x0,0x0,0x0,0x276,};
    }
   final private JJCalls[] jj_2_rtns = new JJCalls[18];
   private boolean jj_rescan = false;
@@ -4941,7 +4956,7 @@ public class ADQLParser implements ADQLParserConstants {
   /** Generate ParseException. */
   public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[104];
+    boolean[] la1tokens = new boolean[107];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -4964,7 +4979,7 @@ public class ADQLParser implements ADQLParserConstants {
         }
       }
     }
-    for (int i = 0; i < 104; i++) {
+    for (int i = 0; i < 107; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

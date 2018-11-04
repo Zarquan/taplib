@@ -204,6 +204,12 @@ public interface ADQLParserConstants {
   int UNSIGNED_INTEGER = 102;
   /** RegularExpression Id. */
   int DIGIT = 103;
+  /** RegularExpression Id. */
+  int HEX_PREFIX = 104;
+  /** RegularExpression Id. */
+  int HEX_INTEGER = 105;
+  /** RegularExpression Id. */
+  int HEX_DIGIT = 106;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -318,6 +324,9 @@ public interface ADQLParserConstants {
     "<UNSIGNED_FLOAT>",
     "<UNSIGNED_INTEGER>",
     "<DIGIT>",
+    "\"0x\"",
+    "<HEX_INTEGER>",
+    "<HEX_DIGIT>",
   };
 
 }

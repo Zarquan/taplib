@@ -51,6 +51,55 @@ public class TestADQLParser {
 	}
 
 	@Test
+	public void testHexadecimalLiteral(){
+		ADQLParser parser = new ADQLParser();
+		try{
+			parser.parseQuery("SELECT a + 1 FROM cat;");
+			parser.parseQuery("SELECT a + 0x1 FROM cat;");
+			parser.parseQuery("SELECT a + 0xa FROM cat;");
+			parser.parseQuery("SELECT a + 0xA FROM cat;");
+
+			parser.parseQuery("SELECT a + 01 FROM cat;");
+			parser.parseQuery("SELECT a + 0x01 FROM cat;");
+			parser.parseQuery("SELECT a + 0x0a FROM cat;");
+			parser.parseQuery("SELECT a + 0x0A FROM cat;");
+
+			parser.parseQuery("SELECT a FROM cat WHERE a > 1;");
+			parser.parseQuery("SELECT a FROM cat WHERE a > 0x1;");
+			parser.parseQuery("SELECT a FROM cat WHERE a > 0xa;");
+			parser.parseQuery("SELECT a FROM cat WHERE a > 0xA;");
+
+			parser.parseQuery("SELECT a FROM cat WHERE a > 01;");
+			parser.parseQuery("SELECT a FROM cat WHERE a > 0x01;");
+			parser.parseQuery("SELECT a FROM cat WHERE a > 0x0a;");
+			parser.parseQuery("SELECT a FROM cat WHERE a > 0x0A;");
+		}catch(Exception e){
+			e.printStackTrace(System.err);
+			fail("These ADQL queries are strictly correct! No error should have occured. (see stdout for more details)");
+		}
+/*
+ * Should these throw an Exception ?
+ * Current behaviour is to interpret this as a number followed by a column, as if there was a comma.
+ * SELECT a + 0, g FROM cat;
+		try{
+			parser.parseQuery("SELECT a + 0g FROM cat;");
+			fail("Invalid decimal digit.");
+		}catch(Exception e){
+			assertEquals(ParseException.class, e.getClass());
+			assertEquals(" Encountered ", e.getMessage());
+		}
+        try{
+            parser.parseQuery("SELECT a + 0x0g FROM cat;");
+            fail("Invalid hexadecimal digit.");
+        }catch(Exception e){
+            assertEquals(ParseException.class, e.getClass());
+            assertEquals(" Encountered ", e.getMessage());
+        }
+ * 
+ */
+	}
+
+	@Test
 	public void testColumnReference(){
 		ADQLParser parser = new ADQLParser();
 		try{

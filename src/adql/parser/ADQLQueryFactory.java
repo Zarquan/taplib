@@ -2,20 +2,20 @@ package adql.parser;
 
 /*
  * This file is part of ADQLLibrary.
- * 
+ *
  * ADQLLibrary is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * ADQLLibrary is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with ADQLLibrary.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright 2012-2017 - UDS/Centre de Données astronomiques de Strasbourg (CDS),
  *                       Astronomisches Rechen Institut (ARI)
  */
@@ -52,6 +52,7 @@ import adql.query.operand.ADQLOperand;
 import adql.query.operand.Concatenation;
 import adql.query.operand.NegativeOperand;
 import adql.query.operand.NumericConstant;
+import adql.query.operand.HexadecimalConstant;
 import adql.query.operand.Operation;
 import adql.query.operand.OperationType;
 import adql.query.operand.StringConstant;
@@ -79,19 +80,19 @@ import adql.query.operand.function.geometry.RegionFunction;
 
 /**
  * <p>This class lets the {@link ADQLParser} to build an object representation of an ADQL query.</p>
- * 
+ *
  * <p>To customize the object representation you merely have to extends the appropriate functions of this class.</p>
- * 
+ *
  * @author Gr&eacute;gory Mantelet (CDS;ARI)
  * @version 1.4 (04/2017)
- * 
+ *
  * @see ADQLParser
  */
 public class ADQLQueryFactory {
 
 	/**
 	 * Type of table JOIN.
-	 * 
+	 *
 	 * @author Gr&eacute;gory Mantelet (CDS)
 	 * @version 1.0 (08/2011)
 	 */
@@ -206,7 +207,12 @@ public class ADQLQueryFactory {
 	}
 
 	public NumericConstant createNumericConstant(String value) throws Exception{
-		return new NumericConstant(value, true);
+        if (value.startsWith(HexadecimalConstant.PREFIX)){
+            return new HexadecimalConstant(value,true);
+        }
+        else{
+            return new NumericConstant(value,true);
+        }
 	}
 
 	public StringConstant createStringConstant(String value) throws Exception{
@@ -271,25 +277,25 @@ public class ADQLQueryFactory {
 
 	/**
 	 * <p>Creates the user defined functions called as the given name and with the given parameters.</p>
-	 * 
+	 *
 	 * <p>
 	 * 	By default, this function returns a {@link DefaultUDF} instance. It is generic enough to cover every kind of functions.
 	 * 	But you can of course override this function in order to return your own instance of {@link UserDefinedFunction}.
 	 * 	In this case, you may not forget to call the super function (super.createUserDefinedFunction(name, params)) so that
 	 * 	all other unknown functions are still returned as {@link DefaultUDF} instances.
 	 * </p>
-	 * 
+	 *
 	 * <p><i><b>IMPORTANT:</b>
 	 * 	The tests done to check whether a user defined function is allowed/managed in this implementation, is done later by the parser.
 	 * 	Only declared UDF will pass the test of the parser. For that, you should give it a list of allowed UDFs (each UDF will be then
 	 * 	represented by a {@link FunctionDef} object).
 	 * </i></p>
-	 * 
+	 *
 	 * @param name			Name of the user defined function to create.
 	 * @param params		Parameters of the user defined function to create.
-	 * 
+	 *
 	 * @return				The corresponding user defined function (by default an instance of {@link DefaultUDF}).
-	 * 
+	 *
 	 * @throws Exception	If there is a problem while creating the function.
 	 */
 	public UserDefinedFunction createUserDefinedFunction(String name, ADQLOperand[] params) throws Exception{
