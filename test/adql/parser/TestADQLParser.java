@@ -95,8 +95,66 @@ public class TestADQLParser {
             assertEquals(ParseException.class, e.getClass());
             assertEquals(" Encountered ", e.getMessage());
         }
- * 
+ *
  */
+	}
+
+	@Test
+	public void testBitwiseOperators(){
+		ADQLParser parser = new ADQLParser();
+		try{
+			parser.parseQuery("SELECT a & 1 FROM cat;");
+			parser.parseQuery("SELECT a | 1 FROM cat;");
+			parser.parseQuery("SELECT a ^ 1 FROM cat;");
+
+	        parser.parseQuery("SELECT a & 0x1 FROM cat;");
+	        parser.parseQuery("SELECT a | 0x1 FROM cat;");
+	        parser.parseQuery("SELECT a ^ 0x1 FROM cat;");
+
+            parser.parseQuery("SELECT a FROM cat WHERE a & 1 <> 0;");
+            parser.parseQuery("SELECT a FROM cat WHERE a | 1 <> 0;");
+            parser.parseQuery("SELECT a FROM cat WHERE a ^ 1 <> 0;");
+
+            parser.parseQuery("SELECT a FROM cat WHERE a & 0x1 <> 0;");
+            parser.parseQuery("SELECT a FROM cat WHERE a | 0x1 <> 0;");
+            parser.parseQuery("SELECT a FROM cat WHERE a ^ 0x1 <> 0;");
+
+            parser.parseQuery("SELECT a FROM cat WHERE a & 1 != 0;");
+            parser.parseQuery("SELECT a FROM cat WHERE a | 1 != 0;");
+            parser.parseQuery("SELECT a FROM cat WHERE a ^ 1 != 0;");
+
+            parser.parseQuery("SELECT a FROM cat WHERE a & 0x1 != 0;");
+            parser.parseQuery("SELECT a FROM cat WHERE a | 0x1 != 0;");
+            parser.parseQuery("SELECT a FROM cat WHERE a ^ 0x1 != 0;");
+
+            parser.parseQuery("SELECT (a & 1) FROM cat;");
+            parser.parseQuery("SELECT (a | 1) FROM cat;");
+            parser.parseQuery("SELECT (a ^ 1) FROM cat;");
+
+            parser.parseQuery("SELECT (a & 0x1) FROM cat;");
+            parser.parseQuery("SELECT (a | 0x1) FROM cat;");
+            parser.parseQuery("SELECT (a ^ 0x1) FROM cat;");
+
+            parser.parseQuery("SELECT a FROM cat WHERE (a & 1) <> 0;");
+            parser.parseQuery("SELECT a FROM cat WHERE (a | 1) <> 0;");
+            parser.parseQuery("SELECT a FROM cat WHERE (a ^ 1) <> 0;");
+
+            parser.parseQuery("SELECT a FROM cat WHERE (a & 0x1) <> 0;");
+            parser.parseQuery("SELECT a FROM cat WHERE (a | 0x1) <> 0;");
+            parser.parseQuery("SELECT a FROM cat WHERE (a ^ 0x1) <> 0;");
+
+            parser.parseQuery("SELECT a FROM cat WHERE (a & 1) != 0;");
+            parser.parseQuery("SELECT a FROM cat WHERE (a | 1) != 0;");
+            parser.parseQuery("SELECT a FROM cat WHERE (a ^ 1) != 0;");
+
+            parser.parseQuery("SELECT a FROM cat WHERE (a & 0x1) != 0;");
+            parser.parseQuery("SELECT a FROM cat WHERE (a | 0x1) != 0;");
+            parser.parseQuery("SELECT a FROM cat WHERE (a ^ 0x1) != 0;");
+            
+		}catch(Exception e){
+			e.printStackTrace(System.err);
+			fail("These ADQL queries are strictly correct! No error should have occured. (see stdout for more details)");
+		}
 	}
 
 	@Test

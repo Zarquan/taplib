@@ -718,7 +718,7 @@ public class TestDBChecker {
 			fail("Geometrical UDFs are not allowed for the moment in the ADQL language: this test should have failed!");
 		}catch(ParseException e1){
 			assertTrue(e1 instanceof ParseException);
-			assertEquals(" Encountered \"(\". Was expecting one of: \")\" \".\" \".\" \")\" ", e1.getMessage());
+			assertEquals(" Encountered \"(\". Was expecting one of: \")\" \".\" \".\" \")\" \")\" \".\" \")\" ", e1.getMessage());
 		}
 		try{
 			parser.parseQuery("SELECT titi()*3 AS \"SuperError\" FROM foo;");

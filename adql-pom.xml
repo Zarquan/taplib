@@ -37,6 +37,19 @@
         ]]>
     </description>
 
+    <!--+
+        | Our archive repository for 3rd party dependencies that are not available online,
+        | this includes the Starlink stil jars and the .
+        +-->
+    <repositories>
+        <repository>
+            <id>external-archive</id>
+            <name>Archive for 3rd party components</name>
+            <url>http://data.metagrid.co.uk/wfau/maven/archive</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
+
     <dependencies>
 
     	<dependency>
@@ -77,8 +90,19 @@
     	</dependency>
 
         <!--+
-            | The stil_3.1.jar in the project lib directory contains classes from lots of different sources, including the starlink stil classes from Bristol.
-            |
+            | The stil_3.1.jar in the project lib directory contains classes from lots of different sources, including the Starlink stil classes from Bristol.
+            | This version needs the stil_3.1.jar in our local Maven repository.
+            | The version number of the jar file will need tweaking for this to work.
+        <dependency>
+            <groupId>uk.ac.starlink</groupId>
+            <artifactId>stil_</artifactId>
+            <version>3.1</version>
+        </dependency>
+            +-->
+
+        <!--+
+            | This section gets the Starlink dependencies from the original Starlink jars.
+            | This version needs the Starlink jars in our local Maven repository.
             +-->
         <dependency>
             <groupId>uk.ac.starlink</groupId>
@@ -191,6 +215,25 @@
                     <buildParser>true</buildParser>
                     <buildTokenManager>true</buildTokenManager>
                 </configuration>
+            </plugin>
+
+            <plugin>
+	            <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+	                <execution>
+			            <id>add-source</id>
+			            <phase>generate-sources</phase>
+			            <goals>
+				            <goal>add-source</goal>
+			            </goals>
+			            <configuration>
+				            <sources>
+					            <source>${project.build.directory}/generated-sources/javacc/</source>
+				            </sources>
+			            </configuration>
+		            </execution>
+                </executions>
             </plugin>
 
             <plugin>
